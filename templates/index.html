@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecoalerta - Reporte de Problemas Ambientales</title>
+    <style>
+        /* Imagen de fondo */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(static/fondo.jpg); /* Ruta correcta de la imagen */
+            background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+            background-position: center; /* Centra la imagen */
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente para contraste */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .success {
+            color: green;
+            font-size: 1.2em;
+        }
+        .error {
+            color: red;
+            font-size: 1.2em;
+        }
+        .report-section {
+            margin-top: 40px;
+        }
+        .report-section h2 {
+            text-align: center;
+            font-size: 1.6em;
+            color: #4CAF50;
+        }
+        .report {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid #4CAF50;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .report .date {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .report .location {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+        }
+        .report .description {
+            font-size: 1em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ecoalerta - Reporte de Problemas Ambientales</h1>
+
+        <!-- Mensajes de éxito y error -->
+        <div id="message-container"></div>
+
+        <!-- Formulario para agregar un nuevo reporte -->
+        <form id="report-form" onsubmit="return agregarReporte(event)">
+            <div class="form-group">
+                <label for="ubicacion">Ubicación del Problema:</label>
+                <input type="text" id="ubicacion" name="ubicacion" placeholder="Ej. Parque Central, Río Amazonas" required>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción del Problema:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe el problema ambiental que has observado" required></textarea>
+            </div>
+
+            <button type="submit">Registrar Reporte</button>
+        </form>
+
+        <!-- Sección de Reportes Registrados -->
+        <div class="report-section">
+            <h2>Reportes Registrados</h2>
+            <div id="report-list"></div>
+        </div>
+    </div>
+
+    <script>
+        // Función para agregar el reporte y mostrarlo en la página
+        function agregarReporte(event) {
+            event.preventDefault();  // Evitar que el formulario se envíe
+
+            // Obtener los valores del formulario
+            const ubicacion = document.getElementById("ubicacion").value;
+            const descripcion = document.getElementById("descripcion").value;
+
+            // Obtener la fecha actual
+            const fecha = new Date().toLocaleString();
+
+            // Crear un nuevo reporte
+            const reporteHTML = `
+                <div class="report">
+                    <div class="date">Fecha: ${fecha}</div>
+                    <div class="location">Ubicación: ${ubicacion}</div>
+                    <div class="description">Descripción: ${descripcion}</div>
+                </div>
+            `;
+
+            // Agregar el nuevo reporte a la lista
+            document.getElementById("report-list").innerHTML += reporteHTML;
+
+            // Limpiar el formulario
+            document.getElementById("ubicacion").value = "";
+            document.getElementById("descripcion").value = "";
+
+            // Mostrar mensaje de éxito
+            const messageContainer = document.getElementById("message-container");
+            messageContainer.innerHTML = `<div class="message success">Reporte agregado exitosamente!</div>`;
+        }
+    </script>
+
+</body>
+</html>
