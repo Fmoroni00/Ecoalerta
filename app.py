@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os  # Importamos el módulo os para acceder a las variables de entorno
 
 # Configuración de la aplicación Flask
 app = Flask(__name__)
@@ -51,4 +52,6 @@ def index():
 
 # Ejecutar la aplicación
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Configuramos el puerto a partir de la variable de entorno 'PORT' (para plataformas como Render) o 5000 por defecto
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host="0.0.0.0", port=port)
